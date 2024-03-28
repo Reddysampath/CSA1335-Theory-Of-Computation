@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+int isBelongToCFG(char *str);
+
+int parseString(char *str, int index);
+
+int main() {
+    char input[100];
+    
+    printf("Enter a string: ");
+    scanf("%s", input);
+    
+    if (isBelongToCFG(input)) {
+        printf("The string belongs to the language defined by the CFG.\n");
+    } else {
+        printf("The string does not belong to the language defined by the CFG.\n");
+    }
+    
+    return 0;
+}
+
+int isBelongToCFG(char *str) {
+    return parseString(str, 0);
+}
+
+int parseString(char *str, int index) {
+    if (str[index] == '0') {
+        index++;
+        if (str[index] == 'A') {
+            index++;
+            if (str[index] == '1') {
+                index++;
+                return parseString(str, index);
+            }
+        }
+    }
+    else if (str[index] == '1') {
+        index++;
+        if (str[index] == 'A') {
+            index++;
+            return parseString(str, index);
+        }
+    } else if (str[index] == 'A') {
+        index++;
+        return parseString(str, index);
+    }
+
+    if (str[index] == '\0') {
+        return 1;  
+    } else {
+        return 0; 
+    }
+}
